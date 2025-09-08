@@ -1,0 +1,64 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/apiEndpoints
+  auth-public:
+    paths: [ '/api/auth/login', '/api/auth/register' ]
+  auth:
+    paths: [ '/api/auth', '/api/auth/*' ]
+  user:
+    paths: [ '/api/users', '/api/users/*' ]
+  post:
+    paths: [ '/api/posts', '/api/posts/*' ]
+  message:
+    paths: [ '/api/messages', '/api/messages/*' ]
+  history:
+    paths: [ '/api/history', '/api/history/*' ]
+  file:
+    paths: [ '/api/files', '/api/files/*' ]
+  email:
+    paths: [ '/api/email', '/api/email/*' ]
+  frontend:
+    paths: [ '/', '/*']
+    methods: [ 'GET' ]
+serviceEndpoints:
+  # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
+  authService:
+    url: 'http://localhost:3000'
+  userService:
+    url: 'http://localhost:3001'
+  postService:
+    url: 'http://localhost:3002'
+  messageService:
+    url: 'http://localhost:3003'
+  historyService:
+    url: 'http://localhost:3004'
+  fileService:
+    url: 'http://localhost:3005'
+  emailService:
+    url: 'http://localhost:3006'
+  frontendService:
+    url: 'http://localhost:5173'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  # - oauth2
+  - proxy
+  - rate-limit
+  - jwt
+pipelines:
+  # see: https://www.express-gateway.io/docs/configuration/gateway.config.yml/pipelines
+  auth-public:
+    apiEndpoints:
+      - auth-public
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: authService 
+              changeOrigin: true
