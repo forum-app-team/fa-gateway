@@ -7,6 +7,7 @@ apiEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/apiEndpoints
   auth-public:
     paths: [ '/api/auth/login', '/api/auth/register' ]
+    methods: [ 'POST' ]
   auth:
     paths: [ '/api/auth', '/api/auth/*' ]
   user:
@@ -54,11 +55,138 @@ policies:
   - jwt
 pipelines:
   # see: https://www.express-gateway.io/docs/configuration/gateway.config.yml/pipelines
+  frontend:
+    apiEndpoints:
+      - frontend
+    policies:
+      - log:
+          - action:
+              message: "${req.method} ${req.path}"
+      - proxy:
+          - action:
+              serviceEndpoint: frontendService
+              changeOrigin: true
+
   auth-public:
     apiEndpoints:
       - auth-public
     policies:
+      - log:
+          - action:
+              message: "${req.method} ${req.path}"
       - proxy:
           - action:
-              serviceEndpoint: authService 
+              serviceEndpoint: authService
+              changeOrigin: true
+
+  auth:
+    apiEndpoints:
+      - auth
+    policies:
+      - jwt:
+          - action:
+              secretOrPublicKey: ${JWT_SECRET}
+              checkCredentialExistence: false
+      - log:
+          - action:
+              message: "${req.method} ${req.path} ${JSON.stringify(req.user)}"
+      - proxy:
+          - action:
+              serviceEndpoint: authService
+              changeOrigin: true
+
+  user:
+    apiEndpoints:
+      - user
+    policies:
+      - jwt:
+          - action:
+              secretOrPublicKey: ${JWT_SECRET}
+              checkCredentialExistence: false
+      - log:
+          - action:
+              message: "${req.method} ${req.path} ${JSON.stringify(req.user)}"
+      - proxy:
+          - action:
+              serviceEndpoint: userService
+              changeOrigin: true
+
+  post:
+    apiEndpoints:
+      - post
+    policies:
+      - jwt:
+          - action:
+              secretOrPublicKey: ${JWT_SECRET}
+              checkCredentialExistence: false
+      - log:
+          - action:
+              message: "${req.method} ${req.path} ${JSON.stringify(req.user)}"
+      - proxy:
+          - action:
+              serviceEndpoint: postService
+              changeOrigin: true
+
+  message:
+    apiEndpoints:
+      - message
+    policies:
+      - jwt:
+          - action:
+              secretOrPublicKey: ${JWT_SECRET}
+              checkCredentialExistence: false
+      - log:
+          - action:
+              message: "${req.method} ${req.path} ${JSON.stringify(req.user)}"
+      - proxy:
+          - action:
+              serviceEndpoint: messageService
+              changeOrigin: true
+
+  history:
+    apiEndpoints:
+      - history
+    policies:
+      - jwt:
+          - action:
+              secretOrPublicKey: ${JWT_SECRET}
+              checkCredentialExistence: false
+      - log:
+          - action:
+              message: "${req.method} ${req.path} ${JSON.stringify(req.user)}"
+      - proxy:
+          - action:
+              serviceEndpoint: historyService
+              changeOrigin: true
+
+  file:
+    apiEndpoints:
+      - file
+    policies:
+      - jwt:
+          - action:
+              secretOrPublicKey: ${JWT_SECRET}
+              checkCredentialExistence: false
+      - log:
+          - action:
+              message: "${req.method} ${req.path} ${JSON.stringify(req.user)}"
+      - proxy:
+          - action:
+              serviceEndpoint: fileService
+              changeOrigin: true
+
+  email:
+    apiEndpoints:
+      - email
+    policies:
+      - jwt:
+          - action:
+              secretOrPublicKey: ${JWT_SECRET}
+              checkCredentialExistence: false
+      - log:
+          - action:
+              message: "${req.method} ${req.path} ${JSON.stringify(req.user)}"
+      - proxy:
+          - action:
+              serviceEndpoint: emailService
               changeOrigin: true
