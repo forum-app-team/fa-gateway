@@ -28,7 +28,7 @@ apiEndpoints:
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
   authService:
-    url: 'http://localhost:3000'
+    url: 'http://localhost:5001'
   userService:
     url: 'http://localhost:3001'
   postService:
