@@ -1,0 +1,15 @@
+{
+  "name": "fa-gateway",
+  "description": "Express Gateway Instance Bootstraped from Command Line",
+  "repository": {},
+  "license": "UNLICENSED",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express-gateway": "^1.16.11"
+  },
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}
