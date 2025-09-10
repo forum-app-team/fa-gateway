@@ -5,6 +5,9 @@
   "license": "UNLICENSED",
   "version": "1.0.0",
   "main": "server.js",
+  "scripts": {
+    "dev": "node --watch server.js"
+  },
   "dependencies": {
     "dotenv": "^17.2.2",
     "express-gateway": "^1.16.11"
