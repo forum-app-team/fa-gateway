@@ -6,7 +6,10 @@ admin:
 apiEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/apiEndpoints
   auth-public:
-    paths: [ '/api/auth/login', '/api/auth/register' ]
+    paths: 
+      - '/api/auth/login'
+      - '/api/auth/register'
+      - '/api/auth/refresh'
     methods: [ 'POST' ]
   auth:
     paths: [ '/api/auth', '/api/auth/*' ]
