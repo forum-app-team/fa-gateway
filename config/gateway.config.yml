@@ -11,7 +11,7 @@ apiEndpoints:
       - '/api/auth/register'
       - '/api/auth/refresh'
       - '/api/auth/verify-email/*'
-    methods: [ 'GET', 'POST' ]
+    methods: [ 'POST' ]
   auth:
     paths: [ '/api/auth', '/api/auth/*' ]
   user:
