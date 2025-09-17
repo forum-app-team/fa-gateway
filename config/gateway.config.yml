@@ -10,6 +10,7 @@ apiEndpoints:
       - '/api/auth/login'
       - '/api/auth/register'
       - '/api/auth/refresh'
+      - '/api/auth/verify-email/*'
     methods: [ 'POST' ]
   auth:
     paths: [ '/api/auth', '/api/auth/*' ]
